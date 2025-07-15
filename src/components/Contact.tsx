@@ -12,6 +12,7 @@ const Contact = () => {
     email: "",
     message: "",
   });
+  const [sent, setSent] = useState("Send a Message");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,11 +28,13 @@ const Contact = () => {
         (result) => {
           console.log("✅ Email sent!", result.text);
           setFormData({ name: "", email: "", message: "" });
-          alert("Message sent successfully!");
+          setSent("sent");
+          // alert("Message sent successfully!");
         },
         (error) => {
           console.error("Email failed:", error.text);
-          alert("Oops! Email sending failed 😓");
+          // alert("Oops! Email sending failed 😓");
+          setSent("fail");
         }
       );
   };
@@ -225,7 +228,7 @@ const Contact = () => {
                     isDark ? "text-emerald-400" : "text-blue-600"
                   }`}
                 >
-                  Send a Message
+                  {sent}
                 </h3>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
