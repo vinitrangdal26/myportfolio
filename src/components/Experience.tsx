@@ -15,11 +15,13 @@ const Experience = () => {
       location: "Bengaluru",
       description: "Developed a video conferencing application",
       achievements: [
-        "Built LSTM-based multilingual translator for English → Hindi/French translation",
-        "Designed comprehensive audio-to-text pipeline with advanced error-handling",
-        "Implemented time-stamp extraction and synchronization features",
-        "Optimized model performance achieving 92% translation accuracy",
+        "Built a full-stack video conferencing app with secure login and user roles using Keycloak",
+        "Integrated WebRTC and socket connections for real-time audio/video communication",
+        "Dockerized the entire application for easy deployment and consistent dev environments",
+        "Worked with Django templates and backend routing for dynamic views and API integration",
+        "Gained hands-on experience in real-time networking, API workflows, and system design",
       ],
+
       color: "from-emerald-200 to-blue-900",
     },
     {
