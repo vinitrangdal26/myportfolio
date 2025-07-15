@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Mail, Github, Linkedin, Download, Send } from "lucide-react";
+import emailjs from "emailjs-com";
 import { useScrollAnimation } from "../hooks/useScrollAnimation";
 import { useTheme } from "../contexts/ThemeContext";
 
@@ -14,7 +15,25 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+
+    emailjs
+      .send(
+        "service_50k0lma", // e.g., service_xxx
+        "template_5mf5454", // e.g., template_yyy
+        formData,
+        "41yxUHKcX8Qw9co7c" // e.g., 'xzyabc123'
+      )
+      .then(
+        (result) => {
+          console.log("✅ Email sent!", result.text);
+          setFormData({ name: "", email: "", message: "" });
+          alert("Message sent successfully!");
+        },
+        (error) => {
+          console.error("Email failed:", error.text);
+          alert("Oops! Email sending failed 😓");
+        }
+      );
   };
 
   const handleChange = (
