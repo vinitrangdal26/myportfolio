@@ -106,7 +106,7 @@ const Projects = () => {
                             </ul>
                           </div>
 
-                          <div className="flex gap-4">
+                          {/* <div className="flex gap-4">
                             <button className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg ${
                               isDark 
                                 ? 'bg-blue-600 hover:bg-blue-700 text-white' 
@@ -123,7 +123,7 @@ const Projects = () => {
                               <ExternalLink size={20} />
                               Live Demo
                             </button>
-                          </div>
+                          </div> */}
                         </div>
 
                         <div className="relative group">
