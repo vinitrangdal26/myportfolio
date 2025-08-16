@@ -20,87 +20,91 @@ const ThreeBackground: React.FC = () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // 3D-like floating objects
-    const objects: Array<{
-      x: number;
-      y: number;
-      z: number;
-      vx: number;
-      vy: number;
-      vz: number;
-      size: number;
-      rotation: number;
-      rotationSpeed: number;
-      type: 'cube' | 'sphere' | 'triangle';
-    }> = [];
+    // Track mouse for parallax effect
+    let mouseX = 0, mouseY = 0;
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX - window.innerWidth / 2;
+      mouseY = e.clientY - window.innerHeight / 2;
+    });
 
-    // Initialize objects
-    for (let i = 0; i < 15; i++) {
+    const objects: Array<any> = [];
+
+    for (let i = 0; i < 25; i++) {
       objects.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         z: Math.random() * 100 + 50,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
         vz: (Math.random() - 0.5) * 0.2,
-        size: Math.random() * 30 + 10,
+        size: Math.random() * 30 + 15,
         rotation: 0,
         rotationSpeed: (Math.random() - 0.5) * 0.02,
-        type: ['cube', 'sphere', 'triangle'][Math.floor(Math.random() * 3)] as 'cube' | 'sphere' | 'triangle'
+        type: ['cube', 'sphere', 'triangle', 'hex'][Math.floor(Math.random() * 4)]
       });
     }
 
+    const baseColor = isDark ? '59, 130, 246' : '16, 185, 129'; // Tailwind colors
+    const bgGradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    bgGradient.addColorStop(0, isDark ? '#0f172a' : '#ecfdf5');
+    bgGradient.addColorStop(1, isDark ? '#1e293b' : '#f0fdfa');
+
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = bgGradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       objects.forEach(obj => {
-        // Update position
         obj.x += obj.vx;
         obj.y += obj.vy;
         obj.z += obj.vz;
         obj.rotation += obj.rotationSpeed;
 
-        // Boundary checks
-        if (obj.x < -50 || obj.x > canvas.width + 50) obj.vx *= -1;
-        if (obj.y < -50 || obj.y > canvas.height + 50) obj.vy *= -1;
-        if (obj.z < 20 || obj.z > 150) obj.vz *= -1;
+        if (obj.x < -100 || obj.x > canvas.width + 100) obj.vx *= -1;
+        if (obj.y < -100 || obj.y > canvas.height + 100) obj.vy *= -1;
+        if (obj.z < 30 || obj.z > 200) obj.vz *= -1;
 
-        // 3D perspective
         const scale = 100 / obj.z;
         const size = obj.size * scale;
-        const opacity = Math.max(0.1, Math.min(0.3, (150 - obj.z) / 100));
+        const opacity = Math.max(0.15, Math.min(0.4, (200 - obj.z) / 200));
 
         ctx.save();
-        ctx.translate(obj.x, obj.y);
+        ctx.translate(obj.x + mouseX * scale * 0.05, obj.y + mouseY * scale * 0.05);
         ctx.rotate(obj.rotation);
         ctx.globalAlpha = opacity;
 
-        // Color based on theme
-        const baseColor = isDark ? '59, 130, 246' : '16, 185, 129'; // blue-500 or emerald-500
+        // Glow effect
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = `rgba(${baseColor}, 0.8)`;
+
         ctx.fillStyle = `rgba(${baseColor}, ${opacity})`;
         ctx.strokeStyle = `rgba(${baseColor}, ${opacity * 2})`;
         ctx.lineWidth = 2;
 
-        // Draw different shapes
         switch (obj.type) {
           case 'cube':
-            ctx.fillRect(-size/2, -size/2, size, size);
-            ctx.strokeRect(-size/2, -size/2, size, size);
+            ctx.fillRect(-size / 2, -size / 2, size, size);
             break;
           case 'sphere':
             ctx.beginPath();
-            ctx.arc(0, 0, size/2, 0, Math.PI * 2);
+            ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
             ctx.fill();
-            ctx.stroke();
             break;
           case 'triangle':
             ctx.beginPath();
-            ctx.moveTo(0, -size/2);
-            ctx.lineTo(-size/2, size/2);
-            ctx.lineTo(size/2, size/2);
+            ctx.moveTo(0, -size / 2);
+            ctx.lineTo(-size / 2, size / 2);
+            ctx.lineTo(size / 2, size / 2);
             ctx.closePath();
             ctx.fill();
-            ctx.stroke();
+            break;
+          case 'hex':
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+              const angle = (Math.PI / 3) * i;
+              ctx.lineTo(Math.cos(angle) * size / 2, Math.sin(angle) * size / 2);
+            }
+            ctx.closePath();
+            ctx.fill();
             break;
         }
 
