@@ -31,6 +31,7 @@ const Contact = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    // NOTE: Keep your actual service/template/user IDs secure.
     emailjs
       .send(
         "service_50k0lma",
@@ -60,11 +61,20 @@ const Contact = () => {
     });
   };
 
+  const glassPanelClasses = isDark 
+    ? 'bg-gray-800/50 backdrop-blur-sm border border-cyan-400/20 hover:shadow-cyan-400/30' 
+    : 'bg-white/60 backdrop-blur-sm border border-gray-200/30 hover:shadow-blue-200/20';
+
+  const inputClasses = isDark
+    ? "bg-gray-800/60 border border-gray-700 text-white placeholder-gray-500 font-mono focus:border-cyan-400 focus:ring-cyan-400/30 focus:shadow-[0_0_15px_rgba(6,182,212,0.2)]"
+    : "bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500/20";
+
+
   return (
     <section
       id="contact"
       className={`py-24 ${
-        isDark ? "bg-gray-900" : "bg-white"
+        isDark ? "bg-black" : "bg-white" // Black Background
       } transition-colors duration-300`}
     >
       <div className="container mx-auto px-6 max-w-7xl">
@@ -75,13 +85,17 @@ const Contact = () => {
           }`}
         >
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-emerald-500">
+            <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${
+              isDark ? 'text-cyan-400' : 'text-blue-600' // Cyan Accent
+            }`}>
               Get In Touch
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-emerald-500 mx-auto rounded-full"></div>
+            <div className={`w-24 h-1 mx-auto rounded-full ${
+              isDark ? 'bg-cyan-400' : 'bg-blue-600'
+            }`}></div>
             <p
               className={`text-xl mt-6 max-w-2xl mx-auto ${
-                isDark ? "text-gray-300" : "text-gray-600"
+                isDark ? "text-gray-400" : "text-gray-600"
               }`}
             >
               Ready to collaborate on innovative AI solutions? Let's connect and
@@ -90,18 +104,12 @@ const Contact = () => {
           </div>
 
           <div className="grid md:grid-cols-2 gap-12">
-            {/* Left Side – Info */}
-            <div className="space-y-8">
-              <div
-                className={`backdrop-blur-sm rounded-2xl p-8 border hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${
-                  isDark
-                    ? "bg-gray-800/50 border-gray-700/50"
-                    : "bg-gray-50/80 border-gray-200/50"
-                }`}
-              >
+            {/* Left Side – Info (Glass Panel) */}
+            <div className={`space-y-8 ${glassPanelClasses} rounded-2xl p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1`}>
+              <div>
                 <h3
                   className={`text-2xl font-bold mb-6 ${
-                    isDark ? "text-emerald-400" : "text-blue-600"
+                    isDark ? "text-cyan-400" : "text-blue-600" // Cyan Accent
                   }`}
                 >
                   Let's Connect
@@ -113,7 +121,7 @@ const Contact = () => {
                     href="mailto:vinitrangdal26@gmail.com"
                     className="flex items-center gap-4 hover:scale-[1.02] transition-transform"
                   >
-                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
                       <Mail size={24} className="text-white" />
                     </div>
                     <div>
@@ -141,7 +149,7 @@ const Contact = () => {
                     rel="noopener noreferrer"
                     className="flex items-center gap-4 hover:scale-[1.02] transition-transform"
                   >
-                    <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <div className="w-12 h-12 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
                       <Github size={24} className="text-white" />
                     </div>
                     <div>
@@ -169,7 +177,7 @@ const Contact = () => {
                     rel="noopener noreferrer"
                     className="flex items-center gap-4 hover:scale-[1.02] transition-transform"
                   >
-                    <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
+                    <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg">
                       <Linkedin size={24} className="text-white" />
                     </div>
                     <div>
@@ -193,17 +201,11 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Right Side – Form */}
-            <div
-              className={`backdrop-blur-sm rounded-2xl p-8 border hover:shadow-xl transition-all duration-300 ${
-                isDark
-                  ? "bg-gray-800/50 border-gray-700/50"
-                  : "bg-gray-50/80 border-gray-200/50"
-              }`}
-            >
+            {/* Right Side – Form (Glass Panel) */}
+            <div className={`${glassPanelClasses} rounded-2xl p-8 hover:shadow-xl transition-all duration-300`}>
               <h3
                 className={`text-2xl font-bold mb-6 ${
-                  isDark ? "text-emerald-400" : "text-blue-600"
+                  isDark ? "text-cyan-400" : "text-blue-600" // Cyan Accent
                 }`}
               >
                 Send a Message
@@ -225,12 +227,8 @@ const Contact = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 ${
-                      isDark
-                        ? "bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-emerald-400/20"
-                        : "bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500/20"
-                    }`}
-                    placeholder="Enter your name"
+                    className={`w-full px-4 py-3 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 ${inputClasses}`}
+                    placeholder="$name>"
                     required
                   />
                 </div>
@@ -250,12 +248,8 @@ const Contact = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 ${
-                      isDark
-                        ? "bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-emerald-400/20"
-                        : "bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500/20"
-                    }`}
-                    placeholder="Enter your email"
+                    className={`w-full px-4 py-3 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 ${inputClasses}`}
+                    placeholder="$email>"
                     required
                   />
                 </div>
@@ -275,19 +269,15 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleChange}
                     rows={5}
-                    className={`w-full px-4 py-3 border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 resize-none ${
-                      isDark
-                        ? "bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-emerald-400/20"
-                        : "bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500/20"
-                    }`}
-                    placeholder="Enter your message"
+                    className={`w-full px-4 py-3 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 resize-none ${inputClasses}`}
+                    placeholder="$message>"
                     required
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-gradient-to-r from-blue-500 to-emerald-500 hover:from-blue-600 hover:to-emerald-600 text-white rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+                  className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-gray-900 rounded-xl font-bold transition-all duration-300 transform hover:scale-105 hover:shadow-lg shadow-cyan-400/50" // Cyan/Teal button
                 >
                   <Send size={20} />
                   Send Message
@@ -295,7 +285,7 @@ const Contact = () => {
 
                 {/* ✨ Status Message */}
                 {sent === "sent" && (
-                  <p className="text-green-500 text-sm font-medium mt-2">
+                  <p className="text-cyan-500 text-sm font-medium mt-2">
                     ✅ Message sent successfully!
                   </p>
                 )}

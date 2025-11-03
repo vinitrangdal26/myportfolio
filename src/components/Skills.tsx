@@ -1,5 +1,6 @@
 import React from "react";
-import { Code, Database, Brain, BarChart, Mic, Eye } from "lucide-react";
+import { Code, Database, Brain, BarChart, Mic } from "lucide-react";
+import { motion } from "framer-motion"; // Added motion import
 import { useScrollAnimation } from "../hooks/useScrollAnimation";
 import { useTheme } from "../contexts/ThemeContext";
 
@@ -12,37 +13,31 @@ const Skills = () => {
       title: "Programming Languages",
       icon: <Code size={24} />,
       skills: ["Python", "SQL", "JavaScript"],
-      color: "from-blue-500 to-emerald-500",
+      color: "from-cyan-500 to-teal-500", // Consistent Cyan/Teal Gradient
     },
     {
-      title: "Web Frameworks",
+      title: "Web Frameworks & Tools",
       icon: <Database size={24} />,
       skills: ["Flask", "Django", "FastAPI", "React", "Node.js"],
-      color: "from-emerald-500 to-blue-500",
+      color: "from-teal-500 to-cyan-500", // Consistent Teal/Cyan Gradient
     },
     {
       title: "Machine Learning",
       icon: <Brain size={24} />,
       skills: ["TensorFlow", "Scikit-learn", "LSTM"],
-      color: "from-blue-600 to-emerald-600",
+      color: "from-blue-600 to-cyan-600", // Consistent Blue/Cyan Gradient
     },
     {
       title: "Data Analysis",
       icon: <BarChart size={24} />,
       skills: ["Pandas", "NumPy", "Matplotlib", "Seaborn", "Power BI"],
-      color: "from-emerald-600 to-blue-600",
+      color: "from-cyan-600 to-blue-600", // Consistent Cyan/Blue Gradient
     },
-    // {
-    //   title: "Computer Vision",
-    //   icon: <Eye size={24} />,
-    //   skills: ["OpenCV", "Image Processing", "CNN", "Object Detection"],
-    //   color: "from-blue-500 to-emerald-600",
-    // },
     {
       title: "Audio Processing",
       icon: <Mic size={24} />,
       skills: ["Audio-to-Text", "Speech Recognition"],
-      color: "from-emerald-500 to-blue-600",
+      color: "from-teal-600 to-cyan-600", // Consistent Teal/Cyan Gradient
     },
   ];
 
@@ -59,7 +54,7 @@ const Skills = () => {
     <section
       id="skills"
       className={`py-24 ${
-        isDark ? "bg-gray-900" : "bg-white"
+        isDark ? "bg-black" : "bg-white" // Black Background
       } transition-colors duration-300`}
     >
       <div className="container mx-auto px-6 max-w-7xl">
@@ -70,36 +65,41 @@ const Skills = () => {
           }`}
         >
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-emerald-500">
+            <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${
+              isDark ? 'text-cyan-400' : 'text-blue-600' // Cyan Accent
+            }`}>
               Skills & Expertise
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-emerald-500 mx-auto rounded-full"></div>
+            <div className={`w-24 h-1 mx-auto rounded-full ${
+              isDark ? 'bg-cyan-400' : 'bg-blue-600'
+            }`}></div>
           </div>
 
           <div className="max-w-7xl mx-auto">
-            {/* Technical Skills */}
+            {/* Technical Skills - Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
               {skillCategories.map((category, index) => (
-                <div key={index} className="group relative">
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-r ${category.color} rounded-2xl blur opacity-10 group-hover:opacity-30 transition-opacity duration-300`}
-                  ></div>
-                  <div
-                    className={`relative backdrop-blur-sm rounded-2xl p-6 border h-full hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${
-                      isDark
-                        ? "bg-gray-800/50 border-gray-700/50"
-                        : "bg-gray-50/80 border-gray-200/50"
-                    }`}
-                  >
+                <motion.div 
+                  key={index} 
+                  className="group relative"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={isVisible ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  // Glassmorphism Card Style & Glow
+                  whileHover={{ scale: 1.05, boxShadow: '0 0 15px rgba(6,182,212,0.4)' }}
+                >
+                  <div className={`relative rounded-2xl p-6 h-full ${
+                    isDark ? 'bg-gray-800/50 backdrop-blur-sm border border-cyan-400/20 hover:shadow-cyan-400/30' : 'bg-white/60 backdrop-blur-sm border border-gray-200/30 hover:shadow-blue-200/20'
+                  }`}>
                     <div className="flex items-center gap-3 mb-4">
                       <div
-                        className={`w-12 h-12 bg-gradient-to-r ${category.color} rounded-xl flex items-center justify-center text-white`}
+                        className={`w-12 h-12 bg-gradient-to-r ${category.color} rounded-xl flex items-center justify-center text-white shadow-md`}
                       >
                         {category.icon}
                       </div>
                       <h3
                         className={`text-xl font-bold ${
-                          isDark ? "text-white" : "text-gray-900"
+                          isDark ? "text-cyan-300" : "text-gray-900" // Cyan Accent
                         }`}
                       >
                         {category.title}
@@ -111,8 +111,8 @@ const Skills = () => {
                           key={skill}
                           className={`px-3 py-1 rounded-full text-sm border transition-all duration-200 hover:scale-105 ${
                             isDark
-                              ? "bg-gray-700/50 text-gray-300 border-gray-600/50 hover:bg-gray-600/50"
-                              : "bg-white text-gray-600 border-gray-300/50 hover:bg-gray-100"
+                              ? "bg-cyan-600/20 text-cyan-300 border-cyan-400/30 hover:bg-cyan-600/30" // Cyan Tags
+                              : "bg-blue-100 text-blue-600 border-blue-500/30 hover:bg-blue-200"
                           }`}
                         >
                           {skill}
@@ -120,46 +120,45 @@ const Skills = () => {
                       ))}
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
 
-            {/* Specializations */}
-            <div
-              className={`backdrop-blur-sm rounded-2xl p-8 border hover:shadow-xl transition-all duration-300 ${
-                isDark
-                  ? "bg-gray-800/50 border-gray-700/50"
-                  : "bg-gray-50/80 border-gray-200/50"
-              }`}
-            >
+            {/* Specializations - Data Stream Panel */}
+            <div className={`rounded-2xl p-8 transition-all duration-300 ${
+              isDark ? 'bg-gray-800/50 backdrop-blur-sm border border-cyan-400/20 hover:shadow-cyan-400/30 scan-border' : 'bg-white/60 backdrop-blur-sm border border-gray-200/30 hover:shadow-blue-200/20'
+            }`}>
               <h3
                 className={`text-2xl font-bold mb-6 text-center ${
-                  isDark ? "text-emerald-400" : "text-blue-600"
+                  isDark ? "text-cyan-400" : "text-blue-600" // Cyan Accent
                 }`}
               >
                 Areas of Specialization
               </h3>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {specializations.map((spec, index) => (
-                  <div
+                  <motion.div
                     key={index}
-                    className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 hover:scale-105 ${
+                    className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 hover:scale-[1.03] ${
                       isDark
-                        ? "bg-gray-700/30 hover:bg-gray-700/50"
-                        : "bg-white/60 hover:bg-white/80"
+                        ? "bg-gray-700/30 hover:bg-gray-700/50 border border-transparent hover:border-cyan-500/30" // Subtle hover border
+                        : "bg-white/60 hover:bg-white/80 border border-transparent hover:border-blue-500/30"
                     }`}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={isVisible ? { opacity: 1, x: 0 } : {}}
+                    transition={{ delay: 0.3 + index * 0.08, duration: 0.3 }}
                   >
                     <div
                       className={`w-2 h-2 rounded-full ${
-                        isDark ? "bg-emerald-400" : "bg-blue-500"
+                        isDark ? "bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.8)]" : "bg-blue-500" // Cyan Glow Dot
                       }`}
                     ></div>
                     <span
-                      className={isDark ? "text-gray-300" : "text-gray-600"}
+                      className={isDark ? "text-gray-300 font-mono" : "text-gray-600"}
                     >
                       {spec}
                     </span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>

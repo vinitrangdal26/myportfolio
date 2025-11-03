@@ -44,14 +44,30 @@ const ThreeBackground: React.FC = () => {
       });
     }
 
-    const baseColor = isDark ? '59, 130, 246' : '16, 185, 129'; // Tailwind colors
     const bgGradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
     bgGradient.addColorStop(0, isDark ? '#0f172a' : '#ecfdf5');
     bgGradient.addColorStop(1, isDark ? '#1e293b' : '#f0fdfa');
 
+    const getScrollFactor = () => {
+      const doc = document.documentElement;
+      const maxScroll = Math.max(doc.scrollHeight - window.innerHeight, 1);
+      return Math.min(1, Math.max(0, window.scrollY / maxScroll));
+    };
+
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
     const animate = () => {
       ctx.fillStyle = bgGradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const t = getScrollFactor();
+      // Color transitions between cyber teal and violet as you scroll
+      const from = isDark ? [59, 130, 246] : [16, 185, 129];
+      const to = [138, 125, 255];
+      const r = Math.round(lerp(from[0], to[0], t));
+      const g = Math.round(lerp(from[1], to[1], t));
+      const b = Math.round(lerp(from[2], to[2], t));
+      const rgb = `${r}, ${g}, ${b}`;
 
       objects.forEach(obj => {
         obj.x += obj.vx;
@@ -65,19 +81,21 @@ const ThreeBackground: React.FC = () => {
 
         const scale = 100 / obj.z;
         const size = obj.size * scale;
-        const opacity = Math.max(0.15, Math.min(0.4, (200 - obj.z) / 200));
+        const opacity = Math.max(0.12, Math.min(0.45, (200 - obj.z) / 200));
 
         ctx.save();
-        ctx.translate(obj.x + mouseX * scale * 0.05, obj.y + mouseY * scale * 0.05);
+        // Slightly increase parallax with scroll
+        const parallax = 0.05 + t * 0.05;
+        ctx.translate(obj.x + mouseX * scale * parallax, obj.y + mouseY * scale * parallax);
         ctx.rotate(obj.rotation);
         ctx.globalAlpha = opacity;
 
         // Glow effect
         ctx.shadowBlur = 20;
-        ctx.shadowColor = `rgba(${baseColor}, 0.8)`;
+        ctx.shadowColor = `rgba(${rgb}, 0.8)`;
 
-        ctx.fillStyle = `rgba(${baseColor}, ${opacity})`;
-        ctx.strokeStyle = `rgba(${baseColor}, ${opacity * 2})`;
+        ctx.fillStyle = `rgba(${rgb}, ${opacity})`;
+        ctx.strokeStyle = `rgba(${rgb}, ${opacity * 2})`;
         ctx.lineWidth = 2;
 
         switch (obj.type) {

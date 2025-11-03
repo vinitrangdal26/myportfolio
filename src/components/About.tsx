@@ -11,7 +11,7 @@ const About = () => {
     <section
       id="about"
       className={`py-24 ${
-        isDark ? "bg-gray-800" : "bg-gray-50"
+        isDark ? "bg-black" : "bg-gray-50" // Black Background
       } transition-colors duration-300`}
     >
       <div className="container mx-auto px-6 max-w-7xl">
@@ -22,28 +22,22 @@ const About = () => {
           }`}
         >
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-emerald-500">
+            <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${
+              isDark ? "text-cyan-400" : "text-blue-600" // Cyan Accent
+            }`}>
               About Me
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-emerald-500 mx-auto rounded-full"></div>
+            <div className={`w-24 h-1 mx-auto rounded-full ${
+              isDark ? "bg-cyan-400" : "bg-blue-600"
+            }`}></div>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-12 items-start">
             <div className="lg:col-span-2 space-y-8">
-              <div
-                className={`group ${
-                  isDark ? "bg-gray-700/50" : "bg-white/80"
-                } backdrop-blur-sm rounded-2xl p-8 border ${
-                  isDark ? "border-gray-600/30" : "border-gray-200/50"
-                } hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1`}
-              >
-                {/* <h3
-                  className={`text-2xl font-semibold mb-4 ${
-                    isDark ? "text-emerald-400" : "text-blue-600"
-                  }`}
-                >
-                  Background
-                </h3> */}
+              {/* Glassmorphism Card 1 - Summary */}
+              <div className={`group rounded-2xl p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${
+                isDark ? 'bg-gray-800/50 backdrop-blur-sm border border-cyan-400/20 hover:shadow-cyan-400/30' : 'bg-white/60 backdrop-blur-sm border border-gray-200/30 hover:shadow-blue-200/20'
+              }`}>
                 <p
                   className={`leading-relaxed ${
                     isDark ? "text-gray-300" : "text-gray-600"
@@ -60,16 +54,13 @@ const About = () => {
                 </p>
               </div>
 
-              <div
-                className={`group ${
-                  isDark ? "bg-gray-700/50" : "bg-white/80"
-                } backdrop-blur-sm rounded-2xl p-8 border ${
-                  isDark ? "border-gray-600/30" : "border-gray-200/50"
-                } hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1`}
-              >
+              {/* Glassmorphism Card 2 - Languages */}
+              <div className={`group rounded-2xl p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${
+                isDark ? 'bg-gray-800/50 backdrop-blur-sm border border-cyan-400/20 hover:shadow-cyan-400/30' : 'bg-white/60 backdrop-blur-sm border border-gray-200/30 hover:shadow-blue-200/20'
+              }`}>
                 <h3
                   className={`text-2xl font-semibold mb-4 ${
-                    isDark ? "text-emerald-400" : "text-blue-600"
+                    isDark ? "text-cyan-400" : "text-blue-600" // Cyan Accent
                   }`}
                 >
                   Languages
@@ -79,10 +70,10 @@ const About = () => {
                     (lang) => (
                       <span
                         key={lang}
-                        className={`px-4 py-2 rounded-full text-sm transition-all duration-200 hover:scale-105 ${
+                        className={`px-4 py-2 rounded-full text-sm border transition-all duration-200 hover:scale-105 ${
                           isDark
-                            ? "bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600/30"
-                            : "bg-blue-100 text-blue-600 hover:bg-blue-200"
+                            ? "bg-cyan-600/20 text-cyan-300 border-cyan-400/30 hover:bg-cyan-600/30" // Cyan Tags
+                            : "bg-blue-100 text-blue-600 border-blue-500/30 hover:bg-blue-200"
                         }`}
                       >
                         {lang}
@@ -95,31 +86,17 @@ const About = () => {
 
             <div className="lg:col-span-1">
               <div className="sticky top-24">
-                <Interactive3D className="mb-8" />
-
-                {/* <div className={`${
-                  isDark ? 'bg-gray-700/50' : 'bg-white/80'
-                } backdrop-blur-sm rounded-2xl p-6 border ${
-                  isDark ? 'border-gray-600/30' : 'border-gray-200/50'
-                } hover:shadow-xl transition-all duration-300`}>
-                  <img
-                    src="https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=400"
-                    alt="Profile"
-                    className="w-full h-64 object-cover rounded-xl hover:scale-105 transition-transform duration-300"
-                  />
-                </div> */}
+                {/* The new skill orbit animation is placed here */}
+                <Interactive3D className="mb-8" /> 
               </div>
             </div>
           </div>
 
           <div className="mt-16 text-center">
-            <div
-              className={`${
-                isDark ? "bg-gray-700/30" : "bg-white/60"
-              } backdrop-blur-sm rounded-2xl p-8 border ${
-                isDark ? "border-gray-600/20" : "border-gray-200/30"
-              } hover:shadow-xl transition-all duration-300`}
-            >
+            {/* Glassmorphism Quote Card */}
+            <div className={`rounded-2xl p-8 hover:shadow-xl transition-all duration-300 scan-border ${
+              isDark ? 'bg-gray-800/50 backdrop-blur-sm border border-cyan-400/20 hover:shadow-cyan-400/30' : 'bg-white/60 backdrop-blur-sm border border-gray-200/30 hover:shadow-blue-200/20'
+            }`}>
               <p
                 className={`text-xl max-w-3xl mx-auto leading-relaxed ${
                   isDark ? "text-gray-300" : "text-gray-600"
