@@ -43,14 +43,7 @@ const About = () => {
                     isDark ? "text-gray-300" : "text-gray-600"
                   }`}
                 >
-                  Hey there! I’m a Full Stack Developer Trainee currently
-                  working at a software company, where I recently built a
-                  complete video conferencing app. I started off deep in the
-                  world of AI and Machine Learning—solving real-world problems
-                  with smart systems—but now I’m also diving into web
-                  development and APIs to build more dynamic, user-focused
-                  applications. I love bringing ideas to life through clean
-                  code, clever logic, and a touch of curiosity.
+                  I am a Full-Stack & AI Engineer focused on shipping production-ready software. I specialize in complex backend architectures and real-time systems. Most recently, I architected a regulatory AI chatbot that cut user wait times by 95% and engineered a secure video meeting platform supporting 500+ users. Whether it's optimizing inference pipelines or deploying Dockerized microservices on AWS, I love building tools that make a measurable impact.
                 </p>
               </div>
 
